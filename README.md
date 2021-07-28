@@ -9,13 +9,16 @@
 - 基本数据
 	- [x] Hello world
 	- [x] value
-	- [x] variable
-- 基本控制
+	- [x] variable 
 	- [x] constant
+- 基本控制
 	- [x] for
 	- [x] if/else
 	- [x] switch
-
+- 高级数据
+	- [x] array
+	- [x] slice
+	- [x] map
 
 #### :warning: 注意点
 
@@ -27,7 +30,9 @@
 | Golang for循环||[for循环](#for)|
 | Golang if/else判断|1. 花括号必需；2. 没有三目运算|[if/else判断](#ifelse)|
 | Golang switch分支|1.任何类型 2.可以为表达式 3.break/fallthrough 4. 类型判断算法 |[switch分支](#switch)|
-
+| Golang 数组|1.长度固定 2.空零值|[数组](#array)|
+| Golang 切片|2.长度可以不固定 2. make初始化 3. append操作 4.copy操作|[切片](#slice)|
+| Golang map||[map](#map)|
 
 ****
 
@@ -130,7 +135,7 @@
 	- for pos, char := range str {}
 
 ****
-#### <span id="if">if/else判断</span>
+##### <span id="if">if/else判断</span>
 
 - if initialization; condition {
     // do something 
@@ -152,7 +157,7 @@
 	- 右括号和下一级同行
 
 **** 
-<span id="witch">switch分支</span>
+##### <span id="witch">switch分支</span>
 - switch var1 {
     case val1:
         ...
@@ -167,3 +172,88 @@
 	- 各个直接的类型相同
 	- 不需要单独使用break
 		- fallthrough 关键字接着执行
+****
+
+##### <span id="array"> 数组</span>
+###### 概念
+- 相同唯一类型
+	- 原始类型
+- 编号
+- 长度固定
+###### 定义
+- var identifier [len]type
+### new创建
+- var arr=new([5]int)
+	- arr类型为 *[5]int
+
+****
+
+##### <span id="slice">切片</span>
+
+- 长度可变的数组
+- 计算容量 cap()
+- 定义
+	- var identifier []type
+- append
+- copy
+
+****
+
+#### <span id="map">map</span>
+
+###### 概念
+- 引用类型
+- 初始化
+	- 初始化方法
+		- map literals
+			- maplit = map[string]int{"one":1,"two":2}
+		- 引用类型
+			- mapcreat:=make(map[string]int)
+		- 不要使用new
+	- 未初始化
+		- nil
+
+- 声明与赋值
+	- 要求
+		- key
+			- 可以：int float  string   指针  接口类型等
+			- 可以：结构体
+				- key()
+				- hash()
+			- 不可以：数组  切片 结构体
+		- value
+			- 任意值
+				- 切片（一对多）
+					- map1  := make(map[int][]int)
+					- map1 := make(map[int]*[]int)
+			- 函数
+	- 值赋值
+		- map1[key] =value
+		- val :=map[key]
+	- var map map[keytype] valuetype
+- 容量
+	- 容量不定
+	- 动态伸缩
+	- 可以在make时候进行指定
+		- mapcreated := make(map[string]int,100)
+	- 到达容量上限会自动增加
+	- 出于性能考虑
+		- 尽量表明容量
+- 存在判断
+	- value,IsPresent = map[key]
+- 删除
+	- delete(map1,key1)
+- 循环
+	- for key value := range map{ }
+- map 切片
+	- 1. 分配切片
+		- maplist  := make([] map[string]int,100)
+	- 2. 对切片的每个元素进行分配值
+		- for i := range mapList{
+         mapList[i]=map[string]int{"one":1,"two":2}
+	}
+- map 排序
+	- 无序的
+	- 解决方案
+		- 复制到切片中
+		- 在切片中进行排序 
