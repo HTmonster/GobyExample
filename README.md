@@ -9,6 +9,7 @@
 - [x] Hello world
 - [x] value
 - [x] variable
+- [x] constant
 
 
 
