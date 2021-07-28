@@ -11,6 +11,8 @@
 - [x] variable
 - [x] constant
 - [x] for
+- [x] if/else
+- [x] switch
 
 
 
@@ -24,11 +26,10 @@
 |      Golang常量  |          | [常量](#const)     |
 | Golang for循环||[for循环](#for)|
 | Golang if/else判断|1. 花括号必需；2. 没有三目运算|[if/else判断](#ifelse)|
-| Golang switch分支|1.任何类型 2.可以为表达式 3.break/fallthrough 4. 类型判断算法 |[switch](#switch)|
+| Golang switch分支|1.任何类型 2.可以为表达式 3.break/fallthrough 4. 类型判断算法 |[switch分支](#switch)|
 
 
 ****
-
 
 
 ##### <span id="value">基本类型</span>
@@ -78,8 +79,6 @@
 		- 按位补足 ^
 		- 位左移 <<
 		- 位右移 >>
-
-****
 ###### 字符类型
 - ASCII字符
 	- byte
@@ -132,7 +131,6 @@
 
 ****
 #### <span id="if">if/else判断</span>
-### if-else结构
 
 - if initialization; condition {
     // do something 
