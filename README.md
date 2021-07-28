@@ -2,22 +2,30 @@
 
 > 跟随 [Go by Example 中文版 (gobyexample-cn.github.io)](https://gobyexample-cn.github.io/) 项目复习Golang语言
 
-#### 完成清单
+
+
+#### :bicyclist: 完成清单
 
 - [x] Hello world
 - [x] value
 - [x] variable
 
-#### 注意点
+
+
+#### :warning: 注意点
 
 | 知识点 | 注意内容 | 链接 |
 | ------ | -------- | ---- |
 |   Golang值基本类型     |          |  [基本类型](#value)|
 |   Golang变量     |          |  [变量](#variable)   |
-|        |          |      |
+|      Golang常量  |          | [常量](#const)     |
+
+****
+
 
 
 ##### <span id="value">基本类型</span>
+
 ###### 布尔类型
 - var b bool = true
 - 逻辑运算符
@@ -89,3 +97,18 @@
 ###### 作用域
 - 全局变量
 - 局部变量
+
+
+##### <span id="const">常量</span>
+###### 关键词
+- const
+###### 格式
+- const identifier [type] = value
+- const Pi = 3.14159
+###### 要求
+- 编译时刻值要确定
+- 除了内置函数 例如len()
+###### 常数表达式
+- 可以执行任意精度的运算
+- 没有确定类型
+	- 根据上下文需要自动确定类型
