@@ -6,15 +6,14 @@
 
 #### :bicyclist: 完成清单
 
-- [x] Hello world
+|基本数据|基本控制结构|
+|-------|-----------|
+|- [x] Hello world
 - [x] value
-- [x] variable
-- [x] constant
+- [x] variable|- [x] constant
 - [x] for
 - [x] if/else
-- [x] switch
-
-
+- [x] switch|
 
 
 #### :warning: 注意点
@@ -151,7 +150,8 @@
 	- 左括号和条件同行
 	- 右括号和下一级同行
 
-**** <span id="witch">switch</span>
+**** 
+<span id="witch">switch分支</span>
 - switch var1 {
     case val1:
         ...
