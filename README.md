@@ -10,6 +10,8 @@
 - [x] value
 - [x] variable
 - [x] constant
+- [x] for
+
 
 
 
@@ -20,6 +22,10 @@
 |   Golang值基本类型     |          |  [基本类型](#value)|
 |   Golang变量     |          |  [变量](#variable)   |
 |      Golang常量  |          | [常量](#const)     |
+| Golang for循环||[for循环](#for)|
+| Golang if/else判断|1. 花括号必需；2. 没有三目运算|[if/else判断](#ifelse)|
+| Golang switch分支|1.任何类型 2.可以为表达式 3.break/fallthrough 4. 类型判断算法 |[switch](#switch)|
+
 
 ****
 
@@ -72,6 +78,8 @@
 		- 按位补足 ^
 		- 位左移 <<
 		- 位右移 >>
+
+****
 ###### 字符类型
 - ASCII字符
 	- byte
@@ -99,7 +107,7 @@
 - 全局变量
 - 局部变量
 
-
+****
 ##### <span id="const">常量</span>
 ###### 关键词
 - const
@@ -113,3 +121,50 @@
 - 可以执行任意精度的运算
 - 没有确定类型
 	- 根据上下文需要自动确定类型
+
+****
+
+##### <span id="for">for循环</span>
+- for 初始化语句; 条件语句; 修饰语句 {}
+- 无限循环  for{}
+- for-range
+	- for pos, char := range str {}
+
+****
+#### <span id="if">if/else判断</span>
+### if-else结构
+
+- if initialization; condition {
+    // do something 
+}
+- if condition {
+    // do something 
+} else {
+    // do something 
+}
+- if condition1 {
+    // do something 
+} else if condition2 {
+    // do something else    
+} else {
+    // catch-all or default
+}
+- 格式要求
+	- 左括号和条件同行
+	- 右括号和下一级同行
+
+**** <span id="witch">switch</span>
+- switch var1 {
+    case val1:
+        ...
+    case val2:
+        ...
+    default:
+        ...
+}
+- 特性
+	- var 可以是任何类型
+	- 可以为表达式
+	- 各个直接的类型相同
+	- 不需要单独使用break
+		- fallthrough 关键字接着执行

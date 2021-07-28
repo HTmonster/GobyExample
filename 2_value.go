@@ -24,5 +24,4 @@ func main() {
 
 	// 4. 字符串类型
 	fmt.Println("go" + "lang")
-
 }
