@@ -6,14 +6,15 @@
 
 #### :bicyclist: 完成清单
 
-|基本数据|基本控制结构|
-|-------|-----------|
-|- [x] Hello world
-- [x] value
-- [x] variable|- [x] constant
-- [x] for
-- [x] if/else
-- [x] switch|
+- 基本数据
+	- [x] Hello world
+	- [x] value
+	- [x] variable
+- 基本控制
+	- [x] constant
+	- [x] for
+	- [x] if/else
+	- [x] switch
 
 
 #### :warning: 注意点
