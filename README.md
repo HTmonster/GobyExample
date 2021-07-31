@@ -15,10 +15,21 @@
 	- [x] for
 	- [x] if/else
 	- [x] switch
-- 高级数据
+- 高级数据结构
 	- [x] array
 	- [x] slice
 	- [x] map
+	- [x] :adhesive_bandage: range
+- 函数
+	- [x] 普通
+	- [x] 多值返回
+	- [x] 变参函数
+	- [x] 迭代
+- 派生类型
+	- [x] 指针
+	- [x] 结构体
+
+
 
 #### :warning: 注意点
 
@@ -33,6 +44,11 @@
 | Golang 数组|1.长度固定 2.空零值|[数组](#array)|
 | Golang 切片|2.长度可以不固定 2. make初始化 3. append操作 4.copy操作|[切片](#slice)|
 | Golang map||[map](#map)|
+| Golang range|1.可以只迭代map的key 2.在字符串中迭代 unicode||
+| Golang 函数||[函数](#function)|
+| Golang 指针|参考C|[指针](#pointer)|
+| Golang struct||[struct](#struct)|
+
 
 ****
 
@@ -182,7 +198,7 @@
 - 长度固定
 ###### 定义
 - var identifier [len]type
-### new创建
+###### new创建
 - var arr=new([5]int)
 	- arr类型为 *[5]int
 
@@ -200,7 +216,6 @@
 ****
 
 #### <span id="map">map</span>
-
 ###### 概念
 - 引用类型
 - 初始化
@@ -257,3 +272,88 @@
 	- 解决方案
 		- 复制到切片中
 		- 在切片中进行排序 
+
+****
+#### <span id="function"> 函数 </span>
+
+- 格式 
+	- func functionName(parameter_list) (return_value_list) {
+   …
+}
+
+
+- main函数
+	- 无参数
+	- 无返回值 
+
+- 可以多值返回
+- 变参函数
+	- ...
+- 闭包，匿名函数
+- 递归
+
+#### <span id="pointer"> 指针</span>
+###### 控制指定集合
+- 数据结构
+- 分配的数量
+- 内存访问模式
+###### 取地址
+- &
+
+###### 空指针
+- nil
+
+###### 不能发得到一个文字 或者常量的地址
+
+#### <span id="struct">结构体</span>
+###### 结构体
+- 字段构成
+	- 名字（唯一）
+	- 类型
+###### 定义
+
+- type identifier struct {
+    field1 type1
+    field2 type2
+    ...
+}
+- 支持匿名字段
+	- type identifier struct {
+    field1 type1
+    type2
+    ...
+	}
+- 支持内嵌结构体
+	- type A struct {
+    	a  int
+	} 
+	type B struct {
+    	s  str
+    	A
+	}
+
+###### 初始化
+- 混合字面量语法
+
+	- ms := &struct1{10, 15.5, "Chris"}
+	- intr := Interval{0, 3}            (A)
+intr := Interval{end:5, start:1}  (B)
+intr := Interval{end:5}           (C)
+
+###### 字段赋值
+- var s T
+s.a = 5
+s.b = 8
+- 无论是值或者指针，都可以使用选择器（.)来进行访问
+
+###### new函数
+
+- 为结构体分配内存并返回指针
+	- var t *T = new(T)
+
+###### 使用工厂方法创建实例
+
+###### 标签（可选）
+- 附属于字段的字符串
+- 使用reflect包进行访问
+	- 在运行时自省类型、属性和方法
