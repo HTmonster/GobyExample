@@ -28,6 +28,8 @@
 - 派生类型
 	- [x] 指针
 	- [x] 结构体
+	- [x] 方法
+	- [x] 接口
 
 
 
@@ -48,6 +50,8 @@
 | Golang 函数||[函数](#function)|
 | Golang 指针|参考C|[指针](#pointer)|
 | Golang struct||[struct](#struct)|
+| Golang 方法|Go会自动处理值与指针之间的转换|[方法](#method)|
+| Golang 接口|1. 实现多类 2.intetface{}||
 
 
 ****
@@ -359,3 +363,20 @@ s.b = 8
 - 附属于字段的字符串
 - 使用reflect包进行访问
 	- 在运行时自省类型、属性和方法
+
+****
+#### <span id="method"> 方法</span>
+###### 简介
+- 作用在接收者（receiver) 上
+- 特殊函数
+###### 定义
+- func (recv receiver_type) methodName(parameter_list) (return_value_list) { ... }
+- 接收者
+	- 除了接口类型之外都可以
+- 不使用recv 的值，可以用 _ 替换它
+###### 方法与函数的区别
+- 变量
+	- 方法被变量调用
+	- 函数将变量作为参数
+
+###### 可以用来定制String() 方法
