@@ -39,6 +39,11 @@
 		- [x] 通道同步
 		- [x] 通道方向
 		- [x] 通道选择器
+		- [x] 超时处理
+		- [x] 非阻塞通道
+		- [x] 通道关闭
+		- [x] 通道的遍历
+	- [x] Timer&Ticker
 
 
 
@@ -64,6 +69,7 @@
 | Golang 错误处理||[错误处理](#error)|
 | Golang 协程||[协程](#goroutine)|
 | Golang 通道||[通道](#channels)|
+| Golang 定时器与打点器||[Timer&Ticker](#Timer)|
 
 
 
@@ -429,3 +435,39 @@ s.b = 8
 	- make(chan string,2) 指定缓冲两个值
 - 可以使用通道来**同步**协程之间的执行状态
 - 使用通道作为函数的参数时，可以指定通道是**只读**还是**只写**
+- **选择器**可以同时等待多个通道操作
+- 超时处理
+	- `Time.After()`
+- **非阻塞**通道
+	- 带 `default`子句的`select`语句实现
+- 通道**关闭**
+	- `close()` 语句
+- **遍历**通道
+	- `for range` 
+
+****
+
+#### <span id="timer">Timer定时器与Ticker打点器</span>
+
+- Timer 定时器
+	- `func After(d Duration) <- chan Time`
+		- 经过时长d之后，向通道Time发送当前消息
+		- 返回只读通道
+	- `func AfterFunc(d Duration, f func()) *Timer`
+		- 在经过时长d之后调用函数f
+		- 返回Timer
+	- `func NewTimer(d Duration) *Timer`
+		- 创建新的定时器
+		- `func (t *Timer) Reset(d Duration) bool`
+			- 重置定时器，以d为触发时间
+		- `func (t *Timer) Stop() bool`
+			- 停止定时器
+		- `Timer.C` 定时向信道发送时间
+- Ticker 打点器
+	- `func Tick(d Duration) <-chan Time`
+		- 每经过d之后，向通道发送当前时间
+	- `func NewTick(d Duration) *Ticker`
+		- 创建新的打点器
+		- `func (t *Ticker) Stop()`
+			- 停止打点器
+		- `Ticker.C` 定时向通道发送当前时间

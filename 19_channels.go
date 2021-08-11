@@ -86,4 +86,106 @@ func main() {
 			fmt.Println("received", msg2)
 		}
 	}
+
+	/***************超时处理******************/
+	// 通道一与协程一
+	ch1 := make(chan string, 1)
+	go func() {
+		time.Sleep(2 * time.Second) //延时2秒
+		ch1 <- "func 1"
+	}()
+
+	select {
+	case res := <-ch1:
+		fmt.Println(res)
+	case <-time.After(1 * time.Second):
+		fmt.Println("timeout:1 second") //先被触发
+	}
+
+	//通道二与协程二
+	ch2 := make(chan string, 1)
+	go func() {
+		time.Sleep(1 * time.Second) //延时1秒
+		ch2 <- "func 2"
+	}()
+
+	select {
+	case res := <-ch2:
+		fmt.Println(res) //先被触发
+	case <-time.After(2 * time.Second):
+		fmt.Println("timeout:2 second")
+	}
+
+	/*****************非阻塞通道*********************/
+	message2 := make(chan string) //无缓冲
+	signal2 := make(chan bool)    //无缓冲
+
+	// 1. message2 通道没有消息, 非阻塞接收
+	select {
+	case msg := <-message2:
+		fmt.Println(msg)
+	default:
+		fmt.Println("no message received")
+	}
+
+	// 2. message2 通道有消息，非阻塞发送
+	msg2 := "hello"
+	select {
+	case message2 <- msg2:
+		fmt.Println(msg2)
+	default:
+		fmt.Println("no message sent")
+	}
+
+	// 3. message2 和 signal2 非阻塞接收
+	select {
+	case msg := <-message2:
+		fmt.Println(msg)
+	case sig := <-signal2:
+		fmt.Println(sig)
+	default:
+		fmt.Println("no activity")
+	}
+
+	/****************** 通道地图 **************/
+	jobs := make(chan int, 5)
+	done3 := make(chan bool)
+
+	//协程 处理任务
+	go func() {
+		for {
+			j, more := <-jobs
+			if more {
+				// 还有任务
+				fmt.Println("working...", j)
+			} else {
+				// 没有任务
+				fmt.Println("no more work")
+				done3 <- true
+				return
+			}
+		}
+	}()
+
+	//主协程 发送任务
+	for i := 0; i <= 3; i++ {
+		jobs <- i
+		fmt.Println("sent job", i)
+	}
+	// 关闭通道
+	close(jobs)
+	fmt.Println("sent all jobs")
+
+	<-done3
+	/******************通道遍历*****************/
+	//创建缓存通道 并发送消息
+	queue := make(chan string, 2)
+	queue <- "one"
+	queue <- "two"
+	close(queue)
+
+	//通道读取
+	for item := range queue {
+		fmt.Println(item)
+	}
 }
