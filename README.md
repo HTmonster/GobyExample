@@ -34,6 +34,7 @@
 	- [x] 错误处理
 - 协程与通道
 	- [x] 协程
+		- [x] WaitGroup
 	- [x] 通道
 		- [x] 通道缓冲
 		- [x] 通道同步
@@ -44,9 +45,11 @@
 		- [x] 通道关闭
 		- [x] 通道的遍历
 	- [x] Timer&Ticker
-
-
-
+	- [x] 速率限制
+	- [x] 原子操作
+		- [x] 原子计数
+	- [x] 互斥锁
+	- [x] 状态协程
 #### :warning: 注意点
 
 | 知识点 | 注意内容 | 链接 |
@@ -419,6 +422,10 @@ s.b = 8
 - `main goroutine` 会运行任何其他 `goroutine`，如果 `main goroutine` 终止，则该程序将被终止，并且其他 `goroutine` 将得不到运行机会
 - 常常与**匿名函数**搭配
 - M:N线程模型，M个协程运行在N个线程之上
+- `WaitGroup`等待所有的协程
+	1. main协程通过调用 wg.Add(delta int) 设置worker协程的个数，然后创建worker协程；
+	2. worker协程执行结束以后，都要调用 wg.Done()；
+	3. main协程调用 wg.Wait() 且被block，直到所有worker协程全部执行结束后返回。
 
 ****
 #### <span id="channels">通道</span>
