@@ -50,6 +50,15 @@
 		- [x] 原子计数
 	- [x] 互斥锁
 	- [x] 状态协程
+- [x] 排序
+- [x] 错误与异常
+- 字符串相关
+	- [x] 操作
+	- [x] 格式化
+- [x] 正则表达式
+- [x] JSON
+- [x] XML
+
 #### :warning: 注意点
 
 | 知识点 | 注意内容 | 链接 |
@@ -73,7 +82,12 @@
 | Golang 协程||[协程](#goroutine)|
 | Golang 通道||[通道](#channels)|
 | Golang 定时器与打点器||[Timer&Ticker](#Timer)|
-
+| Golang 排序||[排序](#sort)|
+| Golang 错误与异常||[错误与异常](#error)|
+| Golang 字符串操作||[字符串操作](#string)|
+| Golang 正则表达式||[正则表达式](#regexp)|
+| Golang JSON||[Json](#json)|
+| Golang XML||[XML](#xml)|
 
 
 ****
@@ -478,3 +492,133 @@ s.b = 8
 		- `func (t *Ticker) Stop()`
 			- 停止打点器
 		- `Ticker.C` 定时向通道发送当前时间
+
+#### <span id="sort">排序</span>
+
+- `sort`包
+	- 内建数据类型的排序
+		- **原地排序** （直接改变数据）
+	- 自定义排序
+		- 实现 `sort.Interface`接口的
+			- `Len()`
+			- `Swap()`
+			- `Less()` **判断逻辑**
+
+#### <span id="error">错误与异常</span>
+
+- Golang中的错误与异常
+	- 错误 error
+		- 可预见的
+		- 会导致逻辑上的错误，或者进一步变成异常
+	- 异常 panic
+		- 不可预见的
+		- 导致进程异常退出
+- Golang中的**错误**
+	- **本质**
+		- 接口
+			- 包含`Error()`函数，返回值为`string`
+	- **创建**
+		- `errors.New(text string) error`
+	- **装包与解包**
+		- `fmt.Errorf()`函数 装包 （增加上下文信息）
+			- 无`%w`，底层调用`errors.New()`创建错误，错误类型为`*errors.errorString`
+			- 有`%w`，底层实例化`wrapError`结构体指针。错误类型为`*fmt.wrapError`
+		- `errors.Unwrap()`函数 解包
+	- **处理**
+		- 使用**多值**返回
+		- 要么处理，要么略过
+	- **最佳实践**
+		- **github.com/pkg/errors**
+			- `Wrap()` 包装底层错误，增加上下文信息，附加调用栈
+			- `WithMessage()` 增加上下文，不附加调用栈
+			- `WithStack()` 仅返回堆栈信息
+			- `Cause()` 判断底层错误
+- Golang中的**异常**
+	- `panic`: 改变程序的控制流，调用之后**立即停止**当前函数的剩余代码，让程序进入*恐慌*,递归执行调用方的`defer`
+	- `defer`: 会在当前函数**返回前**执行传入的函数，常常用于一些收尾工作（如数据库回滚，关闭文件等）
+	- `recover`: 可以**终止**恐慌，只能在`defer`中发挥作用
+	****
+	#### <span id="string">字符串相关</span>
+
+- **string包操作**
+
+|函数用法|含义|
+|-------|----|
+|`Contains(obj,s)`|obj中是否包含s|
+|`Count(obj,s)`|统计obj中s的个数|
+|`HasPrefix(obj,s)`|s是否是obj的前缀|
+|`HasSuffix(obj,s)`|s是否是obj的后缀|
+|`Index(obj,s)`	 |s在obj中的下标|
+|`Join(obj []string,s)`|s插入到obj中|
+|`Repeat(obj,n int)` |obj重复n次|
+|`Replace(obj,old,new,n)`|将obj中的前n(n<0时候为全部)个old替换为new|
+|`Split(obj,s)`|以s为分隔符去分割obj|
+|`ToLower(obj)`|将obj转为小写|
+|`ToUpper(obj)`|将obj转为大写|
+
+- **格式化**
+	- **通用占位符**
+		- `%v` 值的**默认格式** 
+		- `%+v` 类似上，但是输出结构体时会添加**字段名**
+		- `%#v` <u>值</u>的Go**语法表示**
+		- `%T`  <u>值类型</u>的Go**语法表示**
+	- **常用类型**
+		- **整数类型**
+			- `%b` 二进制
+			- `%c`  unicode码点表示的字符
+			- `%d` 十进制
+			- `%o` 八进制
+			- `%q` 单引号的字符字面值
+			- `%x` 十六进制，小写
+			- `%X` 十六进制，大写
+			- `%U` Unicode格式
+		- **浮点数类型**
+			- `%b` 无小数，二进制指数 科学计数法
+			- `%e` 科学计数法
+			- `%E` 科学计数法
+			- `%f %F` 有小数，但是没有指数部分
+			- `%g %G` 根据实际情况选择`%e %E`或`%f`
+		- **布尔型**
+			- `%t`
+		- **字符串类型**
+			- `%s` 无解释字节
+			- `%q` 无双引号围绕的字符串，由Go语法安全的转义
+			- `%x %X` 十六进制字母，每个字节两个字符
+		- **指针类型**
+			- `%p` 十六进制表示，前缀0x
+		- **标志**
+			- `+` 始终打印数值的正负值
+			- `-` 左对齐
+			- `#` 备用格式
+****
+#### <span id="regexp"> 正则表达式</span>
+
+|函数|作用|
+|----|---|
+|`Compile()`|得到一个优化过的Regexp结构|
+|`MustCompile()`|同上，但是使用panic代替错误|
+|`r.MatchString(s)/regexp.MatchString(rs,s)`|匹配测试,返回布尔值|
+|`r.FindString(s)/regexp.FindString(rs,s)`|字符串查找,返回完全匹配的字符串|
+|`FindStringIndex()`|首次匹配，返回匹配开始和结束的索引|
+|`FindStringSubmatch()`|返回完全匹配和局部匹配的字符串|
+|`FindStringSubmatchIndex()`|返回完全匹配和局部匹配的字符串索引|
+|`FindAllstring(s,n)`|返回所有n次匹配的字符串|
+|`FindAllstringSubmatchIndex()`|同上，但是返回下标|
+|`ReplaceAllString(s,rs)`|替换字符串|
+|`ReplaceAllFunc(s,func)`|同上，但是可以知道func来指定替换|
+
+****
+#### <span id="json">JSON</span>
+- 编码 
+	- `json.Marshal()`
+- 解码
+	- `json.Unmarshal()`
+
+****
+#### <span id="xml">XML</span>
+- 编码
+	- `xml.MarshalIndent()`生成可读性更好的输出结果
+- 解码
+	- `xml.UnMarshal()`
+	
+
