@@ -52,13 +52,43 @@
 	- [x] 状态协程
 - [x] 排序
 - [x] 错误与异常
-- 字符串相关
+- 字符串相关 
 	- [x] 操作
 	- [x] 格式化
 - [x] 正则表达式
 - [x] JSON
 - [x] XML
-
+- 时间
+	- [x] time
+	- [x] 时间戳
+	- [x] 格式化
+- [x] 随机数
+- [x] 解析数字
+- [x] URL解析
+- [x] SHA1哈希
+- [x] Base64编码
+- I/O及文件操作
+	- [x] 读文件
+	- [x] 写文件
+	- [x] 行过滤器
+	- [x] 文件路径
+	- [x] 目录
+	- [x] 临时文件和目录
+- [x] 单元测试
+- 命令行
+	- [x] 参数
+	- [x] 标志
+	- [x] 子命令
+	- [x] 环境变量
+- HTTP
+	- [x] HTTP 客户端
+	- [x] HTTP 服务器端
+	- [x] Context
+- 进程
+	- [x] 生成进程
+	- [x] 执行进程
+	- [x] 信号
+	- [x] 退出
 #### :warning: 注意点
 
 | 知识点 | 注意内容 | 链接 |
@@ -88,7 +118,17 @@
 | Golang 正则表达式||[正则表达式](#regexp)|
 | Golang JSON||[Json](#json)|
 | Golang XML||[XML](#xml)|
-
+| Golang 时间||[时间](#time)|
+| Golang 随机数||[随机数](#rand)|
+| Golang 解析数字||[解析数字](#parsenum)|
+| Golang URL解析||[URL解析](#parseUrl)|
+| Golang SHA1哈希||[SHA1哈希](#hash)|
+| Golang Base64编码||[base64编码](#base64)|
+| Golang IO操作||[IO操作](#file)|
+| Golang 单元测试||[单元测试](#unittest)|
+| Golang 命令行||[命令行](#command)|
+| Golang HTTP||[HTTP](#HTTP)|
+| Golang 进程||[进程](#process)|
 
 ****
 
@@ -621,4 +661,130 @@ s.b = 8
 - 解码
 	- `xml.UnMarshal()`
 	
+****
+#### <span id="time>time</span>
 
+- 时间
+	- time 数据
+		- 组成部分
+			- `Year()` 年
+			- `Month()` 月
+			- ...
+			- `Location()` 时区
+		- 操作
+			- `Before()` 判断时间前
+			- `After()` 判断时间后
+			- `Rqual()` 判断时间相等
+			- `Sub()` 时间相减返回duration
+			- `Add()` 时间加上时间段
+		- 时间戳
+			- `time.Now().Unix()` 时间戳 秒
+			- `time.Now().UnixNano()` 时间戳 纳秒
+	- 常见操作
+		- `time.Now()` 当前时间
+		- `time.Date()` 构建time
+		- `time.Unix(sec,nsec)` 将时间戳转为时间
+		- 格式化
+			- `time.Parse(form,time_str)` 字符串转为时间
+			- `time.Now().Format()` 基于例子来决定日期格式
+****
+#### <span id="rand>随机数</span>
+- `rand.Intn()` 返回随机整数
+- `rand.Float64()` 返回随机浮点数
+- `rand.New(rand.NewSource(time.Now().UnixNano()))` 更换种子
+
+****
+#### <span id="parsenum">解析数字</span>
+- `strconv.ParseFloat(str,bits)` 转为浮点数
+- `strconv.ParseInt(str,adv,bits)` 转为整数
+	- adv: 进制，0为自动识别
+- `strconv.ParseUnit(str,adv,bits)` 转为无符号整数
+- `strconv.Atoi()` 基础的十进制转换函数
+
+#### <span id="parseUrl">解析URL</span>
+- `u:=url.Parse()` 直接进行解析
+	- `u.Scheme()` scheme
+	- `u.User` 认证信息
+		- `u.User.Username()` 用户名
+		- `u.User.Password()` 密码
+	- `u.Host` 主机名及端口
+	- `u.Path` 路径
+	- `u.Fragment` 片段
+	- `u.RawQuery` 查询参数
+
+****
+#### <span>SHA1哈希</span>
+- `h:=sha1.New()` 生成一个哈希
+	- `h.Write()` 处理一个字符串
+	- `h.Sum()` 得到散列值
+
+****
+#### <span>Base64编码</span>
+- `base64.stdEncoding` 标准编码器
+	- `EncodeToString()`
+	- `DecodeString()`
+- `base64.urlEncoding` URL编码器
+
+****
+#### <span id="file">文件操作 </span>
+
+- 参考自己肝了两天的文章
+- [文章](https://htmonster.xyz/blog/post/zhong-yu-ming-bai-liao-yuan-ma-tu-jie-fen-xi-shu-li-golang-zhong-shu-ru-shu-chu-i-o/)
+
+****
+#### <span id="unittest"> 单元测试 </span>
+- (*testing.T).Error* 
+	- 报告测试失败信息，然后**继续**测试
+- (*testing.T).Fail* 
+	- 报告测试失败信息，然后**终止**测试
+- (*testing.T).Run
+	- 进行一个子集测试
+
+****
+#### <span id="command"> 命令行 </span>
+- 参数
+	- `os.Args()`
+- 标志
+	- 声明
+		- `flag.String(名称,默认值,说明)`
+		- `flag.StringVar(&参数,名称,默认值,说明)`已有的参数说明
+		- `flag.Int(名称,默认值,说明)`
+		- `flag.Bool(名称,默认值,说明)`
+	- 解析
+		- `flag.Parse()`
+- 子命令
+	- 作为第一次参数传入
+- 环境变量
+	- `os.GetEnv()`
+	- `os.SetEnv()`
+	- `os.Environ()`
+****
+<span id="HTTP">HTTP</span>
+- 客户端
+	- GET 请求：`http.Get()`
+- 服务器端
+	- handler 
+		- 参数1：http.ResponseWriter 写入响应
+		- 参数2：http.Rquest
+	- `http.HandleFunc(路由,handler)`
+	- `http.ListenAndServe(地址,handler(nil为默认路由))`
+
+****
+#### <span id="process">进程</span>
+- 创建进程
+	- `exec.Command()` 创建对象进程
+		- `Output()` 处理运行命令，等待命令，收集输出
+		- `StdinPipe()/StdoutPipe()` 输入输出管道
+			- `Write()` 写
+			- `Close()` 关闭
+		- `Start()` 开始执行
+		- `Wait()` 等待
+- 执行进程
+	- `exec.LookPath()` 找到执行文件的绝对路径
+	- `syscall.Exec(binary,args,env)` 调用执行程序
+- 信号
+	- `sig := make(chan os.signal,1)` 创建信道
+	- `signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)` 注册信道
+- 退出
+	- `os.Exit()` 程序立即退出 
+		- defer不会被执行
